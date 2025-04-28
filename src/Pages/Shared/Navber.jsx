@@ -1,6 +1,6 @@
 
 import React, { useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import AuthContext from '../../Context/AuthContext/AuthContext';
 import Swal from 'sweetalert2';
 import jobIcon from '../../assets/fabicon1.png'
@@ -32,14 +32,16 @@ Swal.fire({
 }
 
 const links = <>
-<li><Link to=''>Home</Link></li>
-<li><Link to=''>blog</Link></li>
+<li><NavLink to="/"> Home</NavLink></li>
+<li><NavLink to="/myApplication"> My Application</NavLink></li>
+<li><NavLink to="/addjobs">Add Jobs</NavLink></li>
+
 
 </>
 
     return (
-        <div>
-            <div className="navbar bg-base-100 shadow-sm">
+        <div className='max-w-6xl mx-auto'>
+            <div className="navbar text-gray-800 shadow-sm">
   <div className="navbar-start">
     <div className="dropdown">
       <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -52,7 +54,7 @@ const links = <>
       </ul>
     </div>
     <a className="btn btn-ghost text-xl"><img className='w-12' src={jobIcon} alt="" /></a>
-    <h3 className='text-3xl'> Job Portal</h3>
+    <h3 className='text-3xl font-bold'> Job Portal</h3>
   </div>
   <div className="navbar-center hidden lg:flex">
     <ul className="menu menu-horizontal px-1">
@@ -64,8 +66,11 @@ const links = <>
 
     {
       user ? <><button onClick={handleSignOut} className='btn '>LogOut</button></> : <>
-      <Link to='/register'> Register </Link>
-      <Link to='/signIn'> <button className='btn'>Sign In</button> </Link></>
+     <div className="space-x-1">
+     <Link to='/register'> Register </Link>
+     <Link to='/signIn'> <button className='btn btn-primary'>Sign In</button> </Link>
+     </div>
+      </>
       
     }
     

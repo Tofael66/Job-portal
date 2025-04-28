@@ -6,6 +6,7 @@ import Swal from "sweetalert2";
 import { useContext } from "react";
 import AuthContext from "../../Context/AuthContext/AuthContext";
 import Google from "../Shared/SocialLogin/Google";
+import { useLocation, useNavigate } from "react-router-dom";
 
 
 
@@ -15,6 +16,16 @@ import Google from "../Shared/SocialLogin/Google";
 const SignIn = () => {
 
 const {signIn} = useContext(AuthContext) ;
+// const location = useLocation() ;
+// const navigate = useNavigate() ;
+// console.log('sign in ll' , location)
+// const form = location.state || "/" ;
+
+const location = useLocation() ;
+const navigate = useNavigate()
+const form = location?.state ;
+console.log(location)
+
 
       const  handleSingIn = e => {
         e.preventDefault() ;
@@ -22,7 +33,7 @@ const {signIn} = useContext(AuthContext) ;
    
         const email= from.email.value ;
         const password= from.password.value ;
-        console.table(email, password)
+        // console.table(email, password)
         
       
       // password validation koris 
@@ -38,6 +49,8 @@ const {signIn} = useContext(AuthContext) ;
         timer: 1500
       });
       console.log(result) ;
+      // navigate(form) ; 
+      navigate(form)
     
      
     })

@@ -7,7 +7,7 @@ import HotJobs from './HotJobs';
 const Homes = () => {
     return (
         <div>
-            <Banner></Banner>
+           <Banner></Banner>
             <HotJobs></HotJobs>
         </div>
     );

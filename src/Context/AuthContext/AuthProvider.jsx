@@ -9,6 +9,7 @@ import Swal from "sweetalert2";
 
 
 
+
 const AuthProvider = ({children}) => {
 
 const [user , setUser ] = useState(null) ;
@@ -39,6 +40,7 @@ const signOutUser = () => {
 const signWithGoogle = () => {
     setLoading(true) 
     signInWithPopup(auth , provider)
+ 
    
 }
 
