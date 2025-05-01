@@ -12,6 +12,8 @@ import PrivateRout from "./PrivateRout";
 import JobApply from "../Pages/JobApply/JobApply";
 import MyApplication from "../Pages/MyApplication/MyApplication";
 import AddJobs from "../Pages/AddJobs/AddJobs";
+import MypostedJObs from "../Pages/MyPopstedJob/MypostedJObs";
+import ViewApplication from "../Pages/MyPopstedJob/ViewApplication";
 
 
 
@@ -43,8 +45,19 @@ import AddJobs from "../Pages/AddJobs/AddJobs";
           element:<PrivateRout><MyApplication></MyApplication></PrivateRout>
         } ,
         {
+          path: "/viewApplications/:job_id" ,
+          element:<PrivateRout><ViewApplication></ViewApplication></PrivateRout> ,
+          loader: ({params}) => fetch(`http://localhost:5000/job-application/jobs/${params.job_id}`)
+        } ,
+        {
           path: "/addjobs" ,
-          element:<PrivateRout><AddJobs></AddJobs></PrivateRout>
+          element:<PrivateRout><AddJobs></AddJobs></PrivateRout> ,
+          
+        } ,
+
+        {
+          path: "/mypostedjobs" ,
+          element:<PrivateRout><MypostedJObs></MypostedJObs></PrivateRout>
         } ,
 
         {

@@ -35,6 +35,7 @@ const links = <>
 <li><NavLink to="/"> Home</NavLink></li>
 <li><NavLink to="/myApplication"> My Application</NavLink></li>
 <li><NavLink to="/addjobs">Add Jobs</NavLink></li>
+<li><NavLink to="/mypostedjobs">My Posted Jobs</NavLink></li>
 
 
 </>

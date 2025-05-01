@@ -10,7 +10,7 @@ const HotJobsCard = ({job}) => {
 
 const {location , hr_name, hr_email ,_id, description , company_logo , category,  applicationDeadline , jobType, company , title ,  requirements , salaryRange} = job ; 
 // console.log(_id)
-// console.log(job)
+ console.log(job)
 
     return (
         <div>

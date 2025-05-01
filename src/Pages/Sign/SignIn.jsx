@@ -16,15 +16,11 @@ import { useLocation, useNavigate } from "react-router-dom";
 const SignIn = () => {
 
 const {signIn} = useContext(AuthContext) ;
-// const location = useLocation() ;
-// const navigate = useNavigate() ;
-// console.log('sign in ll' , location)
-// const form = location.state || "/" ;
-
 const location = useLocation() ;
-const navigate = useNavigate()
-const form = location?.state ;
-console.log(location)
+const navigate = useNavigate() ;
+// console.log('sign in ll' , location)
+const form = location?.state || "/" ;
+
 
 
       const  handleSingIn = e => {

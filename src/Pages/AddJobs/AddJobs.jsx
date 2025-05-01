@@ -1,3 +1,7 @@
+import { useContext } from "react";
+import Swal from "sweetalert2";
+import AuthContext from "../../Context/AuthContext/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 
 
@@ -5,24 +9,50 @@
 
 const AddJobs = () => {
 
-
+  const {user } = useContext(AuthContext)
+const navigate = useNavigate() ;
   const handleAddJobs = (e) => {
 e.preventDefault() ;
 const fromData = new FormData(e.target) ;
-console.log(fromData.entries())
+//console.log(fromData.entries())
 const initialData = Object.fromEntries(fromData.entries()) ;
-console.log(initialData)
+//console.log(initialData)
 const {min , max , currency , ...newJob} = initialData ; 
-console.log(newJob) 
-newJob.salaryRanges = {min , max , currency} 
-console.log(newJob)
+//console.log(newJob) 
+newJob.salaryRange = {min , max , currency} ;
+ //console.log(newJob)
+ newJob.requirements = newJob.requirements.split('\n') ;
+ newJob.responsibilities = newJob.responsibilities.split('\n') ;
+ console.log(newJob)
 
+fetch('http://localhost:5000/jobs' , {
+  method:'POST' , 
+  headers: {
+    'content-type' : 'application/json'
+  } , 
+  body:JSON.stringify(newJob)
 
+} ) .then(res => res.json()) 
+.then(data => {
+  console.log(data)
+  if(data.insertedId){
+     Swal.fire({
+        position: "top-end",
+        icon: "success",
+        title: "SignUp Success full",
+        showConfirmButton: false,
+        timer: 1500
+      });
+      navigate('/mypostedjobs')
+  }
 
+})
 
 
 
   }
+
+
 
 
 
@@ -47,7 +77,7 @@ console.log(newJob)
           {/* job type */}
       <div className="form-control">
       <label className="label text-xl mb-3">Job Type</label>
-          <select name="Job_type" defaultValue="Pick a font" className="select w-full select-ghost border border-white">
+          <select   name="jobType" defaultValue="Select Job type" className="select w-full select-ghost border border-white">
   <option disabled={true}>Select Job type</option>
   <option>Full Time</option>
   <option>Intern</option>
@@ -57,8 +87,8 @@ console.log(newJob)
 
        {/* job Category*/}
    <div className="form-control">
-   <label className="label text-xl mb-3">Job Filed</label>
-          <select name="Job_Filed" defaultValue="Pick a font" className="select w-full select-ghost border border-white">
+   <label defaultValue="Select Job filed<"  className="label text-xl mb-3">Job Filed</label>
+          <select  name="category" defaultValue="Select Job filed" className="select w-full select-ghost border border-white">
   <option disabled={true}>Select Job filed</option>
   <option>Engineer</option>
   <option>Software</option>
@@ -81,7 +111,7 @@ console.log(newJob)
 {/* currency*/}
    <div className="form-control">
    
-          <select name="currency" defaultValue="Pick a font" className="select w-full select-ghost border border-white">
+          <select  name="currency" defaultValue="currency" className="select w-full select-ghost border border-white">
   <option  disabled={true}> currency</option>
   <option>BDT</option>
   <option>USD</option>
@@ -109,17 +139,11 @@ console.log(newJob)
 
 
 
-{/* HR  name */}
-<div className="form-control">
-   <label className="label text-xl mb-3">
-     <span className="label-text">HR Name</span> </label>
-   <input type="text" name="hr Name" className="input w-full" placeholder="Hr Name" />
-   </div>
 
       {/* job requirement */}
       <div className="form-control">
         <label className="label text-xl mb-3">Job Requirement</label>
-        <textarea className="textarea textarea-bordered w-full"  name="requirement" placeholder=" Each requirement in a new line " required></textarea> 
+        <textarea className="textarea textarea-bordered w-full"  name="requirements" placeholder=" Each requirement in a new line " required></textarea> 
         </div>
 
   {/* job responsibilities */}
@@ -127,11 +151,32 @@ console.log(newJob)
         <label className="label text-xl mb-3">job responsibilities</label>
         <textarea className="textarea textarea-bordered w-full"  name="responsibilities" placeholder="write Each responsibilities in a new line " required></textarea> 
         </div>
+
+        {/* HR  name */}
+<div className="form-control">
+   <label className="label text-xl mb-3">
+     <span className="label-text">HR Name</span> </label>
+   <input type="text" name="hr_name" className="input w-full" placeholder="Hr Name" />
+   </div>
+
    {/* HR Email */}
 <div className="form-control">
    <label className="label text-xl mb-3">
      <span className="label-text">HR Email </span> </label>
-   <input type="text" name="hr_email" className="input w-full" placeholder="Hr email" />
+   <input  defaultValue={user?.email} type="email" name="hr_email" className="input w-full" placeholder="Hr email" />
+   </div>
+     {/* applicationDeadline*/}
+<div className="form-control">
+   <label className="label text-xl mb-3">
+     <span className="label-text">applicationDeadline </span> </label>
+   <input  defaultValue={user?.email} type="date" name="applicationDeadline" className="input w-full" placeholder="
+Deadline" />
+   </div>
+      {/* status */}
+<div className="form-control hidden ">
+   <label className="label text-xl mb-3">
+     <span className="label-text">status </span> </label>
+   <input type="text" name="status" defaultValue={'active'} className="input w-full" placeholder="Hr email" />
    </div>
       {/* Company Url */}
 <div className="form-control">
@@ -139,12 +184,7 @@ console.log(newJob)
      <span className="label-text">Company Logo Url </span> </label>
    <input type="url" name="company_logo" className="input w-full" placeholder="Company Url Logo" />
    </div>
-{/* status
-<div className="form-control">
-   <label className="label text-xl mb-3">
-     <span className="label-text">Status</span> </label>
-   <input type="text" name="status" className="input w-full" placeholder="status" />
-   </div> */}
+
 
             {/* job Submit btn */}
      <div className="form-control  mt-6">
